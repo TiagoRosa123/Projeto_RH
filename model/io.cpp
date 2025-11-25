@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 
-
 // Formato do Ficheiro (por linha):
 // NOME_CIFRADO;ID;DEPT;MARCACOES;FORMACOES;NOTAS
 // MARCACOES: DATA:TIPO,DATA:TIPO
@@ -21,14 +20,14 @@ bool guardarDados(const std::vector<Colaborador> &colaboradores,
   }
 
   for (const Colaborador &col : colaboradores) {
-    // 1. Nome Cifrado
+    // 1. Nome Cifrado (para proteção básica de dados)
     ficheiro << cifrar(col.nome, chaveCifra) << ";";
     // 2. ID
     ficheiro << col.id << ";";
     // 3. Departamento
     ficheiro << col.departamento << ";";
 
-    // 4. Marcações
+    // 4. Marcações (Formato: DATA:TIPO,DATA:TIPO)
     bool primeira = true;
     for (const auto &par : col.marcacoes) {
       if (!primeira)
@@ -38,7 +37,7 @@ bool guardarDados(const std::vector<Colaborador> &colaboradores,
     }
     ficheiro << ";";
 
-    // 5. Formações
+    // 5. Formações (Formato: NOME|DATA,NOME|DATA)
     primeira = true;
     for (const auto &f : col.formacoes) {
       if (!primeira)
@@ -48,7 +47,7 @@ bool guardarDados(const std::vector<Colaborador> &colaboradores,
     }
     ficheiro << ";";
 
-    // 6. Notas
+    // 6. Notas (Formato: TEXTO|DATA,TEXTO|DATA)
     primeira = true;
     for (const auto &n : col.notas) {
       if (!primeira)
@@ -84,7 +83,7 @@ bool carregarDados(std::vector<Colaborador> &colaboradores,
     std::string segmento;
     Colaborador col;
 
-    // 1. Nome
+    // 1. Nome (Desencripta ao ler)
     if (std::getline(ssLinha, segmento, ';')) {
       col.nome = decifrar(segmento, chaveCifra);
     }
@@ -94,7 +93,7 @@ bool carregarDados(std::vector<Colaborador> &colaboradores,
       try {
         col.id = std::stoi(segmento);
       } catch (...) {
-        col.id = 0;
+        col.id = 0; // Fallback em caso de erro de conversão
       }
     }
 
@@ -103,7 +102,7 @@ bool carregarDados(std::vector<Colaborador> &colaboradores,
       col.departamento = segmento;
     }
 
-    // 4. Marcações
+    // 4. Marcações (Parse da lista separada por vírgulas)
     if (std::getline(ssLinha, segmento, ';')) {
       std::stringstream ssMarcacoes(segmento);
       std::string item;

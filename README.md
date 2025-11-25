@@ -53,7 +53,7 @@ O projeto segue uma arquitetura MVC (Model-View-Controller):
 Para compilar o projeto, navegue até à pasta raiz e execute o seguinte comando (certifique-se de incluir todos os ficheiros `.cpp`):
 
 ```bash
-g++ -std=c++17 -Wall -g controller/main.cpp model/colaborador.cpp model/calendario.cpp model/io.cpp model/cifra.cpp model/utils.cpp view/view.cpp -o mini_rh
+g++ -std=c++17 -Wall -g controller/main.cpp model/colaborador.cpp model/calendario.cpp model/io.cpp model/cifra.cpp model/utils.cpp view/view.cpp -o rh_avancado
 ```
 
 Depois, execute:

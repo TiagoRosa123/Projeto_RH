@@ -1,9 +1,12 @@
 --- CALENDARIO ---
 ID;Nome;Departamento;Data;Tipo
-123;Alice;IT;2025-02-10;F
+456;Alice;LW;5358-35-43;I
+1;Joao;IT;2025-01-01;F
 
 --- FORMACOES ---
 ID;Nome;Curso;DataConclusao
+1;Joao;Programacao;2025
 
 --- NOTAS ---
 ID;Nome;Nota;Data
+1;Joao;Matematica: 20;15/1/2025

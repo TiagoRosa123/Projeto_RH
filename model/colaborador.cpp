@@ -7,31 +7,32 @@
 #include <iomanip>
 #include <iostream>
 
-
-
 Colaborador *buscarColaboradorPorNome(std::vector<Colaborador> &colaboradores,
                                       const std::string &nome) {
+  // Itera sobre a lista de colaboradores para encontrar o nome correspondente
   for (Colaborador &col : colaboradores) {
     if (col.nome == nome) {
-      return &col;
+      return &col; // Retorna ponteiro para o colaborador encontrado
     }
   }
-  return nullptr;
+  return nullptr; // Retorna nullptr se não encontrar
 }
 
 Colaborador *buscarColaboradorPorId(std::vector<Colaborador> &colaboradores,
                                     int id) {
+  // Itera sobre a lista de colaboradores para encontrar o ID correspondente
   for (Colaborador &col : colaboradores) {
     if (col.id == id) {
-      return &col;
+      return &col; // Retorna ponteiro para o colaborador encontrado
     }
   }
-  return nullptr;
+  return nullptr; // Retorna nullptr se não encontrar
 }
 
 void adicionarColaborador(std::vector<Colaborador> &colaboradores) {
   std::string nome = lerString("Digite o nome do novo colaborador: ");
 
+  // Verifica se já existe um colaborador com o mesmo nome
   if (buscarColaboradorPorNome(colaboradores, nome) != nullptr) {
     std::cout << COR_ERRO << "Erro: Já existe um colaborador com esse nome."
               << COR_RESET << std::endl;
@@ -47,6 +48,8 @@ void adicionarColaborador(std::vector<Colaborador> &colaboradores) {
 
   int id = lerInteiro("Digite o ID do colaborador: ");
 
+  // Verifica se já existe um colaborador com o mesmo ID (não permitido
+  // duplicados)
   if (buscarColaboradorPorId(colaboradores, id) != nullptr) {
     std::cout << COR_ERRO << "Erro: Já existe um colaborador com esse ID."
               << COR_RESET << std::endl;
@@ -55,10 +58,13 @@ void adicionarColaborador(std::vector<Colaborador> &colaboradores) {
 
   std::string departamento = lerString("Digite o departamento: ");
 
+  // Cria e preenche o novo colaborador
   Colaborador novoColaborador;
   novoColaborador.nome = nome;
   novoColaborador.id = id;
   novoColaborador.departamento = departamento;
+
+  // Adiciona à lista
   colaboradores.push_back(novoColaborador);
   std::cout << COR_SUCESSO << "Colaborador '" << nome
             << "' adicionado com sucesso!" << COR_RESET << std::endl;
@@ -87,6 +93,7 @@ void marcarAusencia(std::vector<Colaborador> &colaboradores) {
     return;
   }
 
+  // Solicita a data da ausência
   int ano = lerInteiro("Digite o Ano (ex: 2024): ");
   int mes = lerInteiro("Digite o Mês (1-12): ");
   while (mes < 1 || mes > 12) {
@@ -95,12 +102,14 @@ void marcarAusencia(std::vector<Colaborador> &colaboradores) {
   }
   int dia = lerInteiro("Digite o Dia (1-31): ");
 
+  // Valida a data
   if (!isDataValida(ano, mes, dia)) {
     std::cout << COR_ERRO << "Erro: Data inválida (" << dia << "/" << mes << "/"
               << ano << ")." << COR_RESET << std::endl;
     return;
   }
 
+  // Verifica se é fim de semana
   int diaSemana = getDiaDaSemana(ano, mes, dia);
   if (diaSemana == 0 || diaSemana == 6) { // 0=Domingo, 6=Sábado
     std::cout << COR_ERRO
@@ -111,13 +120,15 @@ void marcarAusencia(std::vector<Colaborador> &colaboradores) {
 
   std::string chaveData = formatarData(ano, mes, dia);
 
-  // Verificar conflito de férias
+  // Solicita o tipo de marcação
   char tipo;
   std::cout << "Tipo de marcação (F - Férias, X - Falta, D - Desmarcar): ";
   std::cin >> tipo;
   limparBuffer();
   tipo = std::toupper(tipo);
 
+  // Se for férias, verifica conflitos com outros colaboradores do mesmo
+  // departamento
   if (tipo == 'F') {
     for (const auto &outroCol : colaboradores) {
       if (outroCol.departamento == col->departamento &&
@@ -139,6 +150,7 @@ void marcarAusencia(std::vector<Colaborador> &colaboradores) {
     }
   }
 
+  // Processa a marcação ou desmarcação
   if (tipo == 'D') {
     if (col->marcacoes.count(chaveData)) {
       col->marcacoes.erase(chaveData);
@@ -304,9 +316,11 @@ void relatorioMensal(const std::vector<Colaborador> &colaboradores) {
   for (const auto &col : colaboradores) {
     int ferias = 0;
     int faltas = 0;
+    // Cria prefixo para filtrar as marcações do mês/ano selecionado
     std::string prefixo =
         std::to_string(ano) + "-" + (mes < 10 ? "0" : "") + std::to_string(mes);
 
+    // Conta férias e faltas
     for (const auto &par : col.marcacoes) {
       if (par.first.find(prefixo) == 0) {
         if (par.second == 'F')
@@ -323,6 +337,7 @@ void relatorioMensal(const std::vector<Colaborador> &colaboradores) {
 void estatisticasDepartamento(const std::vector<Colaborador> &colaboradores) {
   std::map<std::string, std::pair<int, int>> stats; // Dept -> {Ferias, Faltas}
 
+  // Agrega estatísticas por departamento
   for (const auto &col : colaboradores) {
     for (const auto &par : col.marcacoes) {
       if (par.second == 'F')
@@ -336,6 +351,7 @@ void estatisticasDepartamento(const std::vector<Colaborador> &colaboradores) {
   std::string deptMaisAusencias;
   int maxAusencias = -1;
 
+  // Exibe os resultados e encontra o departamento com mais ausências
   for (const auto &par : stats) {
     int total = par.second.first + par.second.second;
     std::cout << "Departamento: " << par.first
@@ -398,6 +414,7 @@ void exportarDados(const std::vector<Colaborador> &colaboradores) {
     return;
   }
 
+  // Exporta dados do calendário
   ficheiro << "--- CALENDARIO ---\n";
   ficheiro << "ID;Nome;Departamento;Data;Tipo\n";
   for (const auto &col : colaboradores) {
@@ -407,6 +424,7 @@ void exportarDados(const std::vector<Colaborador> &colaboradores) {
     }
   }
 
+  // Exporta dados de formações
   ficheiro << "\n--- FORMACOES ---\n";
   ficheiro << "ID;Nome;Curso;DataConclusao\n";
   for (const auto &col : colaboradores) {
@@ -416,6 +434,7 @@ void exportarDados(const std::vector<Colaborador> &colaboradores) {
     }
   }
 
+  // Exporta notas
   ficheiro << "\n--- NOTAS ---\n";
   ficheiro << "ID;Nome;Nota;Data\n";
   for (const auto &col : colaboradores) {

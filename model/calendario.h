@@ -6,16 +6,25 @@
 
 /**
  * @brief Verifica se um ano é bissexto.
+ * @param ano O ano a verificar.
+ * @return true se for bissexto, false caso contrário.
  */
 bool isBissexto(int ano);
 
 /**
  * @brief Retorna o número de dias num determinado mês/ano.
+ * @param ano O ano.
+ * @param mes O mês (1-12).
+ * @return O número de dias no mês.
  */
 int diasNoMes(int ano, int mes);
 
 /**
  * @brief Verifica se uma data (ano, mes, dia) é válida.
+ * @param ano O ano.
+ * @param mes O mês.
+ * @param dia O dia.
+ * @return true se a data for válida, false caso contrário.
  */
 bool isDataValida(int ano, int mes, int dia);
 
@@ -31,10 +40,15 @@ int getDiaDaSemana(int ano, int mes, int dia);
  * @param mes O mês a exibir.
  * @param marcacoes O mapa de marcações (YYYY-MM-DD -> char) do colaborador.
  */
-void imprimirCalendario(int ano, int mes, const std::map<std::string, char>& marcacoes);
+void imprimirCalendario(int ano, int mes,
+                        const std::map<std::string, char> &marcacoes);
 
 /**
  * @brief Formata uma data (ano, mes, dia) para a string "YYYY-MM-DD".
+ * @param ano O ano.
+ * @param mes O mês.
+ * @param dia O dia.
+ * @return A data formatada como string.
  */
 std::string formatarData(int ano, int mes, int dia);
 
