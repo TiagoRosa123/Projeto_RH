@@ -1,0 +1,9 @@
+--- CALENDARIO ---
+ID;Nome;Departamento;Data;Tipo
+123;Alice;IT;2025-02-10;F
+
+--- FORMACOES ---
+ID;Nome;Curso;DataConclusao
+
+--- NOTAS ---
+ID;Nome;Nota;Data

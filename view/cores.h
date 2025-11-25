@@ -9,5 +9,9 @@ inline const std::string COR_OPCAO = "\033[1;33m";
 inline const std::string COR_SAIR = "\033[1;32m";
 inline const std::string COR_ERRO = "\033[1;31m";
 inline const std::string COR_PROMPT = "\033[2;37m";
+inline const std::string COR_SUCESSO = "\033[1;32m"; // Green
+inline const std::string COR_AVISO = "\033[1;33m";   // Yellow
+inline const std::string COR_FERIAS = "\033[1;33m";  // Yellow
+inline const std::string COR_FALTA = "\033[1;31m";   // Red
 
-#endif 
+#endif

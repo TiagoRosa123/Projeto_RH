@@ -5,12 +5,25 @@
 #include <vector>
 #include <map>
 
+struct Formacao {
+    std::string nome_curso;
+    std::string data_conclusao;
+};
+
+struct Nota {
+    std::string texto;
+    std::string data;
+};
 
 struct Colaborador {
+    int id;
     std::string nome;
+    std::string departamento;
     // Usamos um mapa para armazenar apenas os dias com marcações
     // Chave: "YYYY-MM-DD", Valor: 'F' (Férias) ou 'X' (Falta)
     std::map<std::string, char> marcacoes;
+    std::vector<Formacao> formacoes;
+    std::vector<Nota> notas;
 };
 
 /**
@@ -20,6 +33,14 @@ struct Colaborador {
  * @return Um ponteiro para o Colaborador se encontrado, ou nullptr se não.
  */
 Colaborador* buscarColaboradorPorNome(std::vector<Colaborador>& colaboradores, const std::string& nome);
+
+/**
+ * @brief Procura um colaborador pelo ID na lista.
+ * @param colaboradores A lista de todos os colaboradores.
+ * @param id O ID a procurar.
+ * @return Um ponteiro para o Colaborador se encontrado, ou nullptr se não.
+ */
+Colaborador* buscarColaboradorPorId(std::vector<Colaborador>& colaboradores, int id);
 
 /**
  * @brief Adiciona um novo colaborador à lista, verificando duplicados.
@@ -45,5 +66,34 @@ void marcarAusencia(std::vector<Colaborador>& colaboradores);
  */
 void visualizarCalendarioColaborador(std::vector<Colaborador>& colaboradores);
 
+/**
+ * @brief Menu para gerir formações de um colaborador.
+ */
+void gerirFormacoes(Colaborador& colaborador);
+
+/**
+ * @brief Menu para gerir notas de um colaborador.
+ */
+void gerirNotas(Colaborador& colaborador);
+
+/**
+ * @brief Gera relatórios mensais de férias e faltas.
+ */
+void relatorioMensal(const std::vector<Colaborador>& colaboradores);
+
+/**
+ * @brief Mostra estatísticas por departamento.
+ */
+void estatisticasDepartamento(const std::vector<Colaborador>& colaboradores);
+
+/**
+ * @brief Mostra um dashboard resumido.
+ */
+void dashboardResumido(const std::vector<Colaborador>& colaboradores);
+
+/**
+ * @brief Exporta dados de um colaborador ou departamento.
+ */
+void exportarDados(const std::vector<Colaborador>& colaboradores);
 
 #endif // COLABORADOR_H

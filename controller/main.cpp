@@ -7,15 +7,11 @@
 #include "../model/io.h"
 #include "../view/view.h"
 #include "../view/cores.h" 
+#include "../model/utils.h"
 
 // --- Configurações da Aplicação ---
 const std::string NOME_FICHEIRO_DADOS = "rh_dados.txt";
 const int CHAVE_CIFRA = 3;
-
-// Função auxiliar para limpar o buffer de entrada
-void limparInput() {
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-}
 
 int main() {
     // A nossa "base de dados" em memória
@@ -24,31 +20,68 @@ int main() {
     // Tenta carregar os dados do ficheiro ao iniciar
     carregarDados(listaColaboradores, NOME_FICHEIRO_DADOS, CHAVE_CIFRA);
 
-    int opcao = 0;
+    int opcao = -1;
     while (true) {
+        limparEcra();
         exibirMenu();
         
-        // Validação básica da entrada
-        while (!(std::cin >> opcao)) { 
-            std::cout << COR_ERRO << "Opção inválida. Por favor, digite um número (1-5): " << COR_RESET;
-            std::cin.clear(); 
-            limparInput();   
-        }
+        opcao = lerInteiro(""); // A mensagem já está no menu
 
         switch (opcao) {
             case 1:
-                adicionarColaborador(listaColaboradores);
+                listarColaboradores(listaColaboradores);
                 break;
             case 2:
-                marcarAusencia(listaColaboradores);
+                adicionarColaborador(listaColaboradores);
                 break;
             case 3:
-                listarColaboradores(listaColaboradores);
+                marcarAusencia(listaColaboradores);
                 break;              
             case 4:
                 visualizarCalendarioColaborador(listaColaboradores);
                 break;
             case 5:
+                visualizarCalendarioColaborador(listaColaboradores); // Reusing this as it does search + show
+                break;
+            case 6: {
+                std::string termo = lerString("Digite o nome ou ID do colaborador: ");
+                Colaborador* col = nullptr;
+                try {
+                    int id = std::stoi(termo);
+                    col = buscarColaboradorPorId(listaColaboradores, id);
+                } catch (...) {
+                    col = buscarColaboradorPorNome(listaColaboradores, termo);
+                }
+                if (col) gerirFormacoes(*col);
+                else std::cout << COR_ERRO << "Colaborador não encontrado." << COR_RESET << std::endl;
+                break;
+            }
+            case 7: {
+                std::string termo = lerString("Digite o nome ou ID do colaborador: ");
+                Colaborador* col = nullptr;
+                try {
+                    int id = std::stoi(termo);
+                    col = buscarColaboradorPorId(listaColaboradores, id);
+                } catch (...) {
+                    col = buscarColaboradorPorNome(listaColaboradores, termo);
+                }
+                if (col) gerirNotas(*col);
+                else std::cout << COR_ERRO << "Colaborador não encontrado." << COR_RESET << std::endl;
+                break;
+            }
+            case 8:
+                relatorioMensal(listaColaboradores);
+                break;
+            case 9:
+                estatisticasDepartamento(listaColaboradores);
+                break;
+            case 10:
+                dashboardResumido(listaColaboradores);
+                break;
+            case 11:
+                exportarDados(listaColaboradores);
+                break;
+            case 0:
                 guardarDados(listaColaboradores, NOME_FICHEIRO_DADOS, CHAVE_CIFRA);
                 std::cout << COR_SAIR << "A sair do programa. Adeus!" << COR_RESET << std::endl;
                 return 0;
@@ -57,7 +90,6 @@ int main() {
                 break;
         }
         std::cout << "\n" << COR_PROMPT << "Pressione Enter para continuar..." << COR_RESET;
-        limparInput(); 
         std::cin.get(); // Espera por um novo 'Enter'
     }
 
