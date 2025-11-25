@@ -17,18 +17,18 @@ int main() {
   std::vector<Colaborador> listaColaboradores;
 
   // Tenta carregar os dados do ficheiro ao iniciar
-  // Se o ficheiro não existir ou estiver vazio, inicia com lista vazia
+  // Se o ficheiro nao existir ou estiver vazio, inicia com lista vazia
   carregarDados(listaColaboradores, NOME_FICHEIRO_DADOS, CHAVE_CIFRA);
 
   int opcao = -1;
-  // Loop principal da aplicação
+  // Loop principal da aplicacao
   while (true) {
     limparEcra(); // Limpa a consola para mostrar o menu
     exibirMenu();
 
     opcao = lerInteiro(""); // A mensagem já está no menu
 
-    // Processa a opção escolhida pelo utilizador
+    // Processa a opcao escolhida pelo utilizador
     switch (opcao) {
     case 1:
       listarColaboradores(listaColaboradores);
@@ -40,12 +40,12 @@ int main() {
       marcarAusencia(listaColaboradores);
       break;
     case 4:
-      // Visualizar calendário (pede nome/ID dentro da função)
+      // Visualizar calendario (pede nome/ID dentro da funcao)
       visualizarCalendarioColaborador(listaColaboradores);
       break;
     case 5:
-      // Buscar colaborador (reutiliza a função de visualizar calendário que faz
-      // busca) Nota: Poderia ser uma função separada apenas para mostrar dados
+      // Buscar colaborador (reutiliza a funcao de visualizar calendario que faz
+      // busca) Nota: Poderia ser uma funcao separada apenas para mostrar dados
       visualizarCalendarioColaborador(listaColaboradores);
       break;
     case 6: {
@@ -60,7 +60,7 @@ int main() {
       if (col)
         gerirFormacoes(*col);
       else
-        std::cout << COR_ERRO << "Colaborador não encontrado." << COR_RESET
+        std::cout << COR_ERRO << "Colaborador nao encontrado." << COR_RESET
                   << std::endl;
       break;
     }
@@ -76,7 +76,7 @@ int main() {
       if (col)
         gerirNotas(*col);
       else
-        std::cout << COR_ERRO << "Colaborador não encontrado." << COR_RESET
+        std::cout << COR_ERRO << "Colaborador nao encontrado." << COR_RESET
                   << std::endl;
       break;
     }

@@ -25,7 +25,7 @@ int diasNoMes(int ano, int mes) {
 
 bool isDataValida(int ano, int mes, int dia) {
   if (ano < 1900 || ano > 2100)
-    return false; // Limite de anos razoável para o sistema
+    return false; // Limite de anos para o sistema
   if (mes < 1 || mes > 12)
     return false; // Mês inválido
   if (dia < 1 || dia > diasNoMes(ano, mes))

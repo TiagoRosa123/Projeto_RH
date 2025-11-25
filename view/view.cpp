@@ -52,7 +52,7 @@ void imprimirCalendario(int ano, int mes,
 void exibirMenu() {
   std::cout << "\n"
             << COR_TITULO << "=============================" << std::endl;
-  std::cout << "      RH AVANÇADO" << std::endl;
+  std::cout << "           MENU RH"<< std::endl;
   std::cout << "=============================" << COR_RESET << std::endl;
 
   // Exibe as opções com cores para destaque
@@ -60,20 +60,20 @@ void exibirMenu() {
             << std::endl;
   std::cout << COR_OPCAO << "2." << COR_RESET << " Adicionar colaborador"
             << std::endl;
-  std::cout << COR_OPCAO << "3." << COR_RESET << " Marcar férias/faltas"
+  std::cout << COR_OPCAO << "3." << COR_RESET << " Marcar ferias/faltas"
             << std::endl;
   std::cout << COR_OPCAO << "4." << COR_RESET
-            << " Visualizar calendário do colaborador" << std::endl;
+            << " Visualizar calendario do colaborador" << std::endl;
   std::cout << COR_OPCAO << "5." << COR_RESET
             << " Buscar colaborador por ID ou nome" << std::endl;
   std::cout << COR_OPCAO << "6." << COR_RESET
-            << " Gerir formações/cursos de um colaborador" << std::endl;
+            << " Gerir formacoes/cursos de um colaborador" << std::endl;
   std::cout << COR_OPCAO << "7." << COR_RESET
-            << " Gerir notas/observações de um colaborador" << std::endl;
-  std::cout << COR_OPCAO << "8." << COR_RESET << " Relatórios mensais"
+            << " Gerir notas/observacoes de um colaborador" << std::endl;
+  std::cout << COR_OPCAO << "8." << COR_RESET << " Relatorios mensais"
             << std::endl;
   std::cout << COR_OPCAO << "9." << COR_RESET
-            << " Estatísticas por departamento" << std::endl;
+            << " Estatisticas por departamento" << std::endl;
   std::cout << COR_OPCAO << "10." << COR_RESET << " Dashboard resumido"
             << std::endl;
   std::cout << COR_OPCAO << "11." << COR_RESET << " Exportar dados"
